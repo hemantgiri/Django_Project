@@ -1,0 +1,35 @@
+{% extends 'lecture/base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock title %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'lecture/css/contact.css' %}">
+
+
+<div class="d-flex justify-content-center my-3">
+    <fieldset class="border p-2">
+        <legend class="w-auto">
+            <h1 class="text-center"><h1 class="text-center">Login</h1></h1>
+        </legend>
+        <form action=" " method="POST" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            {{error}}
+            {% endfor %}
+            {% endif %}
+
+            {% for fm in form %}
+
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}<br>
+
+            {% endfor %}
+            <small><a href="{% url 'forgotpassword' %}">Forgot Password</a></small>
+            <div class="text-center">
+                <input type="submit" value="Login" class="btn btn-primary ">
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}

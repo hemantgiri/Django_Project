@@ -1,0 +1,80 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+{% block message %}{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>
+        {% for message in messages %}
+        {% if messages.tags %}
+        {{messages.tags}}
+        {% endif %}
+        {{message}}
+        {% endfor %}
+    </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+
+
+<div class="d-flex justify-content-center my-3">
+    <form action="{{contact}}" method="POST" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        {{error}}
+        {% endfor %}
+        {% endif %}
+        {% for fm in form %}
+        {{fm.label_tag}} {{fm}} {{fm.error|striptags}}<br>
+        {% endfor %}
+        <div class="text-center">
+            <input type="submit" value="Submit" class="btn btn-primary ">
+        </div>
+    </form>
+</div>
+
+
+
+
+<h4 class="text-center alert alert-info" >Chapter</h4>
+            {% if chapter %}
+            <table class="table table-hover text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Subject Name</th>
+                    <th scope="col">Chapter Name</th>
+                    <th scope="col">Desciption</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for ch in chapter %}
+                  <tr>
+                    <th scope="row">{{ch.id}}</th>
+                    <td>{{ch.class_name}}</td>
+                    <td>{{ch.subject_name}}</td>
+                    <td>{{ch.chapter_name}}</td>
+                    <td>{{ch.description}}</td>
+                    
+                    <td><a href="{% url 'updatechapter' ch.id %}" class="btn btn-warning btn-sm">EDIT</a>
+                        <form action="{% url 'deletechapter' ch.id %}" method="POST" class="d-inline">{%csrf_token%}
+                            <input type="submit" class="btn btn-danger btn-sm" value="DELETE">
+                        </form>    
+                    
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+            <h4 class="text-center alert alert-info">No Records</h4>
+            {% endif %}
+
+
+{% endblock %}
+

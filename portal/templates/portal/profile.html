@@ -1,0 +1,50 @@
+{% extends 'portal/dashboard.html' %}
+{% load static %}
+{% block message %}{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>
+        {% for message in messages %}
+        {% if messages.tags %}
+        {{messages.tags}}
+        {% endif %}
+        {{message}}
+        {% endfor %}
+    </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+<div class="text-center">
+Username : {{user.username}}<br>
+Last Login : {{user.last_login}}<br>
+</div>
+<div class="d-flex justify-content-center my-3">    
+    <form action="{{profile}}" method="POST" novalidate>
+        {% csrf_token %}
+       
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        {{error}}
+        {% endfor %}
+        {% endif %}
+        {% for fm in form %}
+        {{fm.label_tag}} {{fm}} {{fm.error|striptags}}<br>
+        {% endfor %}
+        <div class="text-center">
+            <!-- <a href="{% url 'passwordchange' %}">Change password</a><br><br> -->
+            <input type="submit" value="Update" class="btn btn-primary">
+            
+        </div>
+    </form>
+</div>
+
+
+
+
+
+{% endblock %}
+

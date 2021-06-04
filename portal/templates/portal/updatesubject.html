@@ -1,0 +1,20 @@
+{% extends 'portal/dashboard.html' %}
+{% block content %}
+<div class="d-flex justify-content-center my-3">
+    <form action="{{contact}}" method="POST" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        {{error}}
+        {% endfor %}
+        {% endif %}
+        {% for fm in form %}
+        {{fm.label_tag}} {{fm}} {{fm.error|striptags}}<br>
+        {% endfor %}
+        <div class="text-center">
+            <input type="submit" value="Submit" class="btn btn-primary ">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

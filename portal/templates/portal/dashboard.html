@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'lecture/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lecture/css/bootstrap.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'lecture/css/main.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'portal/css/dashboard.css' %}">
+    
+</head>
+<body>
+
+{% block message %}
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+<strong>
+
+    {% for message in messages %}
+    {% if messages.tags %}
+    {{messages.tags}}
+    {% endif %}
+    {{message}}
+    {% endfor %}
+</strong>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
+</div>
+{% endif %}{% endblock %}
+<!-- <h1>Dashboard</h1> -->
+{% csrf_token %}
+
+
+
+
+
+
+
+
+
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class=" border-right fixed-left" id="sidebar-wrapper">
+      <div class="sidebar-heading"><img src="{{user.students.picture.url}}" alt="Profile Pic" class="rounded-circle mt-4" width="100px" height="100px">
+         
+
+      </div>
+      <div class="list-group list-group-flush">
+
+        <a href="#" class="list-group-item list-group-item-action text-light">Dashboard</a>
+        <a href="{% url 'class' %}" class="list-group-item list-group-item-action text-light">Class</a>
+        <a href="{% url 'subject' %}" class="list-group-item list-group-item-action text-light">Subjects</a>
+        <a href="{% url 'chapter' %}" class="list-group-item list-group-item-action text-light">Chapters</a>
+        <a href="{% url 'note' %}" class="list-group-item list-group-item-action text-light">Notes</a>  
+        <a href="#" class="list-group-item list-group-item-action text-light">Students</a>
+        <a href="#" class="list-group-item list-group-item-action text-light">Blog</a> 
+        <a href="#" class="list-group-item list-group-item-action text-light">Forum</a>        
+        <a href="{% url 'profile' %}" class="list-group-item list-group-item-action text-light">Profile</a>        
+       
+        
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Menu</button>
+        <h5 class="text-dark text-right my-sm-0">Hey, {{user.first_name|capfirst }}</h5>
+        <a href="{% url 'logout' %}" class="text-right text-dark">Logout</a>
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+            
+          </span>
+        </button> -->
+        
+      </nav>
+      {% block content %} 
+      <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus hic dicta alias, animi corrupti aspernatur architecto autem quos nostrum non accusantium, iure repellendus laborum, fuga at explicabo tenetur quaerat facere minus. Iusto quam, dolore repellat vel nisi qui, enim esse nesciunt minus et illo impedit repudiandae hic earum ut quos!</p>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+  {% endblock %} 
+
+  <!-- Menu Toggle Script -->
+  <script src="{% static 'lecture/js/jquery.js' %}"></script>
+  <script src="{% static 'lecture/js/popper.js.js' %}"></script>
+  <script src="{% static 'lecture/js/all.min.js' %}"></script>
+  <script src="{% static 'lecture/js/bootstrap.min.js' %}"></script>
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+  
+</body>
+</html>

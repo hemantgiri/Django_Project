@@ -1,0 +1,55 @@
+{% extends 'lecture/base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock title %}
+{% block content %}
+
+
+
+
+<link rel="stylesheet" href="{% static 'lecture/css/contact.css' %}">
+{% if messages %}
+
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>
+
+        {% for message in messages %}
+        {% if messages.tags %}
+        {{messages.tags}}
+        {% endif %}
+        {{message}}
+        {% endfor %}
+
+
+    </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+
+
+<div class="d-flex justify-content-center my-2">
+    <fieldset class="border p-2">
+        <legend class="w-auto"><h1 class="text-center">Create an account</h1></legend>
+        <form action=" " method="POST" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            {{error}}
+            {% endfor %}
+            {% endif %}
+
+            {% for fm in form %}    
+            {{fm.label_tag}}&nbsp;&nbsp; {{fm}} {{fm.errors|striptags}}<br>            
+            {% endfor %}
+            
+            <br>
+            <div class="text-center">
+                <input type="submit" value="Sign Up" class="btn btn-primary ">
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+{% endblock %}
